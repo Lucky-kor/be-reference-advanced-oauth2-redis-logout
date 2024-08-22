@@ -22,7 +22,7 @@ Redis를 적용해 로그아웃 기능을 구현한 예제 코드입니다.
     * Jwt Token을 관리하는 클래스입니다.
       1. generateAccessToken, generateRefreshToken 메서드에서 토큰을 생성 후, Redis에 토큰을 저장하는 로직이 추가되었습니다.
       2. 로그아웃시, Redis에서 토큰을 삭제하는 deleteRegisterToken 메서드가 추가되었습니다.
-      * [src/main/java/com/springboot/oauth2_jwt/jwt/JwtTokenizer.java]([https://github.com/codestates-seb/be-reference-send-email/blob/28e43990e300dd06487ba153c4ec64d98278292c/src/main/java/com/codestates/helper/email/SimpleEmailSendable.java](https://github.com/Lucky-kor/be-reference-advanced-oauth2-redis-logout/blob/main/src/main/java/com/springboot/oauth2_jwt/jwt/JwtTokenizer.java))
+      * [src/main/java/com/springboot/oauth2_jwt/jwt/JwtTokenizer.java](https://github.com/Lucky-kor/be-reference-advanced-oauth2-redis-logout/blob/main/src/main/java/com/springboot/oauth2_jwt/jwt/JwtTokenizer.java))
     * OAuth2 인증 후, Tokenizer 객체를 사용해 토큰을 생성하는 로직이 담긴 필터 클래스입니다.
       1. refreshToken 생성시, Redis에서 Key로 사용하기 위해 accessToken을 함께 전달하는 코드가 추가되었습니다.
       2. 다른 키를 사용한다면 추가하지 않아도 괜찮습니다. 다만, JwtTokenizer.java 파일도 함께 수정해야 합니다.
