@@ -78,14 +78,16 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     // Redis에서 토큰을 검증하는 메서드 추가
-    private boolean isTokenValidInRedis(Map<String, Object> claims) {
-        String username = (String) claims.get("username");
+    private void isTokenValidInRedis(Map<String, Object> claims) {
+        String username = Optional.ofNullable((String) claims.get("username"))
+                .orElseThrow(() -> new NullPointerException("Username is null"));
 
-        // Redis에 해당 키(username)가 존재하는지 확인하고 Optional로 처리
-        Boolean hasKey = Optional.ofNullable(redisTemplate.hasKey(username))
-                .orElseThrow(() -> new NullPointerException("Redis key check returned null"));
+        // Redis에 해당 키(username)가 존재하는지 확인
+        Boolean hasKey = redisTemplate.hasKey(username);
 
-        // 키가 존재하면 true 반환
-        return hasKey;
+        // 키가 존재하지 않거나 null일 경우 예외를 던짐
+        if (Boolean.FALSE.equals(hasKey)) {
+            throw new IllegalStateException("Redis key does not exist for username: " + username);
+        }
     }
 }
